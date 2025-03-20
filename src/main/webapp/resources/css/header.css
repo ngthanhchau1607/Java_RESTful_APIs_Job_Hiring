@@ -1,0 +1,27 @@
+/* styles.css */
+header.header {
+    background-color: #4CAF50;
+    /* Màu nền cho header */
+    color: white;
+    /* Màu chữ */
+    padding: 20px 0;
+    /* Khoảng cách trong header */
+    text-align: center;
+    /* Canh giữa nội dung */
+}
+
+header .logo img {
+    width: 150px;
+    /* Kích thước logo */
+    height: auto;
+    /* Tự động điều chỉnh chiều cao */
+    margin-bottom: 10px;
+    /* Khoảng cách dưới logo */
+}
+
+header .header-title h1 {
+    font-size: 24px;
+    /* Kích thước chữ */
+    margin: 0;
+    /* Loại bỏ margin của h1 */
+}
