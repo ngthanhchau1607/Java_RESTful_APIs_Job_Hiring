@@ -18,7 +18,7 @@ public class SkillService {
     }
 
     public boolean isNameExist(String name) {
-        return this.skillRepository.existByName(name);
+        return this.skillRepository.existsByName(name);
     }
 
     public Skill createSkill(Skill s) {

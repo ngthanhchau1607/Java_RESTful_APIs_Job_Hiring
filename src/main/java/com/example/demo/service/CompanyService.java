@@ -14,12 +14,11 @@ import com.example.demo.repository.CompanyRepository;
 @Service
 public class CompanyService {
 
-    private final AuthController authController;
     private final CompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository, AuthController authController) {
+    public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
-        this.authController = authController;
+
     }
 
     public Company handleSaveCompany(Company company) {

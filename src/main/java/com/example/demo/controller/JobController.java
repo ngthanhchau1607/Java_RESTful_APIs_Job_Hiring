@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.example.demo.domain.Job;
 import com.example.demo.domain.Skill;
 import com.example.demo.service.JobService;
-import com.example.demo.service.error.IdInvadateException;
 import com.example.demo.util.annotation.ApiMessage;
+import com.example.demo.util.error.IdInvalidException;
 
 import jakarta.validation.Valid;
 

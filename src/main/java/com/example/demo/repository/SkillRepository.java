@@ -7,5 +7,5 @@ import com.example.demo.domain.Skill;
 import com.example.demo.domain.User;
 
 public interface SkillRepository extends JpaRepository<Skill, Long>, JpaSpecificationExecutor<Skill> {
-    boolean existByName(String name);
+    boolean existsByName(String name);
 }

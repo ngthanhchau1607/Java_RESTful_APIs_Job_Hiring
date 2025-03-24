@@ -1,4 +1,4 @@
-package com.example.demo.service.error;
+package com.example.demo.util.error;
 
 import java.net.http.HttpRequest;
 import java.util.Collections;
@@ -21,12 +21,12 @@ import com.example.demo.domain.RestResponse;
 @RestControllerAdvice
 public class GlobalException {
     @ExceptionHandler(value = {
-            IdInvadateException.class,
+            IdInvalidException.class,
             UsernameNotFoundException.class
 
     })
 
-    public ResponseEntity<RestResponse<Object>> handleIdException(IdInvadateException idException) {
+    public ResponseEntity<RestResponse<Object>> handleIdException(IdInvalidException idException) {
         RestResponse<Object> res = new RestResponse<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
         res.setError(idException.getMessage());
@@ -58,6 +58,19 @@ public class GlobalException {
         res.setMessage(errors.size() > 1 ? errors : errors.get(0));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
 
+    }
+
+    @ExceptionHandler(value = {
+            StorageException.class
+
+    })
+
+    public ResponseEntity<RestResponse<Object>> handleUploadFileException(StorageException fileUploadException) {
+        RestResponse<Object> res = new RestResponse<Object>();
+        res.setStatusCode(HttpStatus.BAD_REQUEST.value());
+        res.setError(fileUploadException.getMessage());
+        res.setMessage("Exception upload file");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
     }
 
 }

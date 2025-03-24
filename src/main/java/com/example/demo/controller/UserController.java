@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.User;
 import com.example.demo.service.UserService;
-import com.example.demo.service.error.IdInvadateException;
 import com.example.demo.util.annotation.ApiMessage;
+import com.example.demo.util.error.IdInvalidException;
 
 @RestController
 // @RequestMapping("/api/v1")
@@ -45,9 +45,9 @@ public class UserController {
 
     @DeleteMapping("user/{id}")
     @ApiMessage("Delete a user")
-    public ResponseEntity<String> deleteUserById(Model model, @PathVariable long id) throws IdInvadateException {
+    public ResponseEntity<String> deleteUserById(Model model, @PathVariable long id) throws IdInvalidException {
         if (id > 1500) {
-            throw new IdInvadateException("id qua lon");
+            throw new IdInvalidException("id qua lon");
         }
         this.userService.handleDeleteUser(id);
         return ResponseEntity.ok(null);
@@ -56,10 +56,10 @@ public class UserController {
     @PostMapping("user/create")
     @ApiMessage("Create new user")
     public ResponseEntity<User> createNewUser(
-            @RequestBody User postManUser) throws IdInvadateException {
+            @RequestBody User postManUser) throws IdInvalidException {
         boolean isEmailEist = this.userService.isEmailExist(postManUser.getEmail());
         if (isEmailEist) {
-            throw new IdInvadateException(
+            throw new IdInvalidException(
                     "Email" + postManUser.getEmail() + "đã tồn tại , vui lòng sử dụng email khác");
         }
         String hassPass = this.passwordEncoder.encode(postManUser.getPassword());

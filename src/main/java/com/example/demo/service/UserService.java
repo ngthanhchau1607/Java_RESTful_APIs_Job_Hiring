@@ -13,13 +13,11 @@ import com.example.demo.repository.UserRepository;
 @Service
 public class UserService {
 
-    private final AuthController authController;
     private final UserRepository userRepository;
     private final CompanyService companyService;
 
-    public UserService(UserRepository userRepository, AuthController authController, CompanyService companyService) {
+    public UserService(UserRepository userRepository, CompanyService companyService) {
         this.userRepository = userRepository;
-        this.authController = authController;
         this.companyService = companyService;
 
     }
@@ -45,7 +43,7 @@ public class UserService {
     }
 
     public boolean isEmailExist(String email) {
-        return this.userRepository.existByEmail(email);
+        return this.userRepository.existsByEmail(email);
     }
 
     public User handleSaveUser(User user) {
