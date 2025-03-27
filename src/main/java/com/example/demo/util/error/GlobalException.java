@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.example.demo.domain.RestResponse;
+import com.example.demo.domain.response.RestResponse;
 
 @RestControllerAdvice
 public class GlobalException {
@@ -25,7 +25,6 @@ public class GlobalException {
             UsernameNotFoundException.class
 
     })
-
     public ResponseEntity<RestResponse<Object>> handleIdException(IdInvalidException idException) {
         RestResponse<Object> res = new RestResponse<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());
@@ -64,7 +63,6 @@ public class GlobalException {
             StorageException.class
 
     })
-
     public ResponseEntity<RestResponse<Object>> handleUploadFileException(StorageException fileUploadException) {
         RestResponse<Object> res = new RestResponse<Object>();
         res.setStatusCode(HttpStatus.BAD_REQUEST.value());

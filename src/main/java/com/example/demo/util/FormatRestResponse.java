@@ -9,7 +9,7 @@ import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import com.example.demo.domain.RestResponse;
+import com.example.demo.domain.response.RestResponse;
 import com.example.demo.util.annotation.ApiMessage;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,6 +35,12 @@ public class FormatRestResponse implements ResponseBodyAdvice {
         if (body instanceof String) {
             return body;
         }
+
+        String path = request.getURI().getPath();
+        if (path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui")) {
+            return body;
+        }
+
         RestResponse<Object> res = new RestResponse<Object>();
         res.setStatusCode(status);
         // Nếu mã trạng thái >= 400, không thay đổi body

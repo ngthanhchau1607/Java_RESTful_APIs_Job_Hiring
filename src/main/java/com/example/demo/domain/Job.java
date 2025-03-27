@@ -3,6 +3,7 @@ package com.example.demo.domain;
 import java.time.Instant;
 import java.util.List;
 
+import com.example.demo.util.SecurityUtil;
 import com.example.demo.util.constant.LevelEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -18,7 +19,10 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,7 +36,10 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @NotBlank(message = "name không được để trống")
     private String name;
+
+    @NotBlank(message = "location không được để trống")
     private String location;
     private double salary;
     private int quantity;
@@ -43,10 +50,10 @@ public class Job {
     private Instant startDate;
     private Instant endDate;
     private boolean active;
-    private Instant createAt;
-    private Instant updateAt;
-    private String createBy;
-    private String updateBy;
+    private Instant createdAt;
+    private Instant updatedAt;
+    private String createdBy;
+    private String updatedBy;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -60,4 +67,22 @@ public class Job {
     @OneToMany(mappedBy = "job", fetch = FetchType.LAZY)
     @JsonIgnore
     List<Resume> resumes;
+
+    @PrePersist
+    public void handleBeforeCreate() {
+        this.createdBy = SecurityUtil.getCurrentUserLogin().isPresent() == true
+                ? SecurityUtil.getCurrentUserLogin().get()
+                : "";
+
+        this.createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    public void handleBeforeUpdate() {
+        this.updatedBy = SecurityUtil.getCurrentUserLogin().isPresent() == true
+                ? SecurityUtil.getCurrentUserLogin().get()
+                : "";
+
+        this.updatedAt = Instant.now();
+    }
 }
